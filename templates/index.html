@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Breast Cancer</title>
+  </head>
+  <body>
+    <h1>Breast Cancer</h1>
+    <form action="{{ url_for('predict')}}" method="POST">
+      uniformity_cell_size (From: 1-10):
+      <input type="number" name="uniformity_cell_size" />
+      <br />
+
+      uniformity_cell_shape (From: 1-10):
+      <input type="number" name="uniformity_cell_shape" />
+      <br />
+
+      bare_nuclei (From: 1-10): <input type="number" name="bare_nuclei" />
+      <br />
+
+      bland_chromatin (From: 1-9):
+      <input type="number" name="bland_chromatin" />
+      <br />
+
+      <input type="submit" value="Submit" />
+    </form>
+    My Prediction: {{predict}}
+    <br />
+    <br />
+    <label>Result from Prediction:</label><br />
+    <label>Begin = 0 </label><br />
+    <label>Malignant = 1 </label><br />
+  </body>
+</html>
