@@ -1,33 +1,125 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Breast Cancer</title>
+    <title>Breast Cancer Pred</title>
+    <style>
+      /* CSS for organizing the layout and styling the submit button */
+      .container {
+        display: flex;
+        justify-content: space-between;
+      }
+      .column {
+        flex: 1;
+        padding: 10px;
+      }
+      .input-label {
+        display: block;
+        margin-bottom: 5px;
+      }
+      .input-field {
+        width: 100%;
+        padding: 5px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+      }
+      .submit-button {
+        background-color: lightblue;
+        border: none;
+        color: white;
+        padding: 5px 10px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        border-radius: 10px;
+      }
+    </style>
   </head>
   <body>
-    <h1>Breast Cancer</h1>
-    <form action="{{ url_for('predict')}}" method="POST">
-      uniformity_cell_size (From: 1-10):
-      <input type="number" name="uniformity_cell_size" />
-      <br />
+    <h1>Breast Cancer Prediction:</h1>
+    <div class="container">
+      <div class="column">
+        <h2>Entries</h2>
+        <form action="{{ url_for('predict')}}" method="POST">
+          <label for="uniformity_cell_size">uniformity_cell_size (0-10):</label>
+          <input
+            type="number"
+            name="uniformity_cell_size"
+            id="uniformity_cell_size"
+            min="0"
+            max="10"
+            required
+          />
+          <br />
 
-      uniformity_cell_shape (From: 1-10):
-      <input type="number" name="uniformity_cell_shape" />
-      <br />
+          <label for="uniformity_cell_shape"
+            >Uniformity_cell_shape (0-10):</label
+          >
+          <input
+            type="number"
+            name="uniformity_cell_shape"
+            id="uniformity_cell_shape"
+            min="0"
+            max="10"
+            required
+          />
+          <br />
 
-      bare_nuclei (From: 1-10): <input type="number" name="bare_nuclei" />
-      <br />
+          <label for="bare_nuclei">Bare_nuclei (0-10):</label>
+          <input
+            type="number"
+            name="bare_nuclei"
+            id="bare_nuclei"
+            min="0"
+            max="10"
+            required
+          />
+          <br />
+          <label for="bland_chromatin">bland_chromatin (0-9):</label>
+          <input
+            type="number"
+            name="bland_chromatin"
+            id="bland_chromatin"
+            min="0"
+            max="9"
+            required
+          />
+          <br />
 
-      bland_chromatin (From: 1-9):
-      <input type="number" name="bland_chromatin" />
-      <br />
+          <button type="submit" class="submit-button">Submit</button>
+          <button type="button" id="clearButton">Clear</button>
+        </form>
+        <h3>Result from Prediction:</h3>
+        <br />
+        <label>Begin = 0 </label><br />
+        <label>Malignant = 1 </label><br />
+      </div>
 
-      <input type="submit" value="Submit" />
-    </form>
-    My Prediction: {{predict}}
+      <div class="column">
+        <h2>Records of Predictions</h2>
+        <div id="resultContainer">
+          <ul id="predictionsList">
+            {% for entry in predictions %}
+            <li>{{ entry }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+
     <br />
     <br />
-    <label>Result from Prediction:</label><br />
-    <label>Begin = 0 </label><br />
-    <label>Malignant = 1 </label><br />
+
+    <script>
+      document
+        .getElementById("clearButton")
+        .addEventListener("click", function () {
+          document.querySelector("form").reset();
+          document.querySelector("#resultContainer").style.display = "none";
+          document.getElementById("predict").innerHTML = "";
+        });
+    </script>
   </body>
 </html>
